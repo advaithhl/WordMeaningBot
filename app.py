@@ -57,7 +57,9 @@ def define(update, context):
 if __name__ == "__main__":
     # get token
     TOKEN = os.getenv('DEFINEBOT_TOKEN')
-    NAME = "DefineBot"
+    NAME = "ahldefinebot"
+
+    PORT = os.getenv('DEFINEBOT_PORT')
 
     updater = Updater(TOKEN, use_context=True)
     dispatcher = updater.dispatcher
@@ -66,5 +68,8 @@ if __name__ == "__main__":
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(define_handler)
 
-    updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+    updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
     updater.idle()
