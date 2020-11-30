@@ -59,7 +59,7 @@ if __name__ == "__main__":
     TOKEN = os.getenv('DEFINEBOT_TOKEN')
     NAME = "ahldefinebot"
 
-    PORT = os.getenv('DEFINEBOT_PORT')
+    PORT = os.getenv('PORT')
 
     updater = Updater(TOKEN, use_context=True)
     dispatcher = updater.dispatcher
