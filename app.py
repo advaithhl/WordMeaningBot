@@ -55,9 +55,9 @@ def define(update, context):
 
 
 if __name__ == "__main__":
-    PRODUCTION = os.getenv('DEFINEBOT_MODE') == 'production'
+    PRODUCTION = os.getenv('WORDMEANINGBOT_MODE') == 'production'
     if PRODUCTION:
-        TOKEN = os.getenv('DEFINEBOT_TOKEN')
+        TOKEN = os.getenv('WORDMEANINGBOT_TOKEN')
     else:
         TOKEN = os.getenv('DEBUGBOT_TOKEN')
 
