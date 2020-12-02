@@ -55,11 +55,11 @@ def define(update, context):
 
 
 if __name__ == "__main__":
-    # get token
-    TOKEN = os.getenv('DEFINEBOT_TOKEN')
-    NAME = "ahldefinebot"
-
-    PORT = os.getenv('PORT')
+    PRODUCTION = os.getenv('DEFINEBOT_MODE') == 'production'
+    if PRODUCTION:
+        TOKEN = os.getenv('DEFINEBOT_TOKEN')
+    else:
+        TOKEN = os.getenv('DEBUGBOT_TOKEN')
 
     updater = Updater(TOKEN, use_context=True)
     dispatcher = updater.dispatcher
@@ -68,8 +68,13 @@ if __name__ == "__main__":
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(define_handler)
 
-    updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=TOKEN)
-    updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+    if PRODUCTION:
+        NAME = "wordmeaningbot"
+        PORT = os.getenv('PORT')
+        updater.start_webhook(listen="0.0.0.0",
+                              port=int(PORT),
+                              url_path=TOKEN)
+        updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+    else:
+        updater.start_polling()
     updater.idle()
